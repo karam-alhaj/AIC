@@ -1,1 +1,1 @@
-# AIC3 EEG Classification Models
+# AIC3 EEG Classification Models by MetaCode Team
