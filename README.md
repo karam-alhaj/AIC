@@ -391,7 +391,7 @@ csp = CSP(n_components=4, reg=None, log=True, norm_trace=False)
 X_train_csp = csp.fit_transform(X_train_csp_input, y_train)
 X_val_csp = csp.transform(X_val_csp_input)
 ```
-This code extracts 4 CSP features per trial whihc are the spatial filters that best discriminate between your two MI classes (left vs. right hand) then applying a log-transform to the filtered signal power. This often improves classification by **reducing skewed feature distributions**.
+W specifiy **CSP features per trial to be 4** which are the spatial filters that best discriminate between your two MI classes (left vs. right hand) then applying a log-transform to the filtered signal power. This often improves classification by **reducing skewed feature distributions**.
 
 
 
