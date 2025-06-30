@@ -10,6 +10,7 @@
 - [Data Preprocessing](#data-preprocessing)
 - [Models](#models)
 - [Final Predictions & Submissions](#final-predictions--submissions)
+- [Deployment & Inference](#deployment--inference)
 - [Future Work / Next Steps](#future-work--next-steps)
 - [Contributors](#contributors)
 
@@ -737,6 +738,42 @@ After decoding the label integers back to their original class names , we saved 
 Final_submission.csv
 ```
 
+
+## Deployment & Inference
+
+We built a prediction pipeline script `(predict_ssvep.py)` and `(predict_mi.py)` to deploy the trained model and generate predictions on new EEG trials from the SSVEP and MI dataset.
+
+This script performs the following steps:
+
+- Loads a single trial based on subject ID, session, and trial number.
+
+- Applies all feature extraction methods.
+
+- Loads saved model artifacts and pkl.
+
+- Makes a real-time prediction and prints the result and time taken.
+
+To make a prediction on a specific trial, run:
+```
+python predict_ssvep.py \
+  --base_path "/path/to/data" \
+  --model_path "ssvep_model_artifacts" \
+  --subject "S01" \
+  --session "S01_sess01" \
+  --trial 1
+```
+Here is the output:
+```
+--- Initializing Predictor from 'ssvep_model_artifacts' ---
+
+==================================
+      PREDICTION: Forward
+==================================
+Total Prediction Time: 196.62 ms
+==================================
+```
+
+This allows for easy local testing of the trained model and can serve as the basis for **further deployment to web apps or real-time BCI systems**.
 
 ## Future Work / Next Steps
 
