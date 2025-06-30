@@ -306,6 +306,18 @@ train_ssvep_df = train_df[train_df['task'] == "SSVEP"].reset_index(drop=True)
     test_ssvep_df = test_df[test_df['task'] == "SSVEP"].reset_index(drop=True)
     print(f"Loaded {len(train_ssvep_df)} training, {len(val_ssvep_df)} validation, and {len(test_ssvep_df)} test trials for SSVEP task.")
 ```
+Then loading the EEG data as before.
+
+#### Initial Data Exploration & Visualizations
+
+Before any processing, we visualized the distribution of labels in the training and validation sets to ensure they are balanced. Then, plotting the raw EEG signals from a single trial to understand what our input data looks like.
+
+Here are the plots:
+<div align="center">
+  <img src="images/SSVEP_label_distribution.png" alt="SSVEP" width="5000" height="700"/>
+</div>
+There is a difference in labels distribution in validation data specially in `Right` and 'Forward' labels.
+
 
 ## Data Preprocessing
 
@@ -455,8 +467,17 @@ By concatenating both we:
 
 - give the model richer information to learn especially when either CSP or PSD alone isn’t enough.
 
-
 ### 2. SSVEP 
+
+In SSVEP, the brain produces electrical activity at the same frequency as the visual stimulus (e.g., 7 Hz, 8 Hz, 10 Hz, 13 Hz).
+
+To detect this frequency-specific response, we must:
+
+- Apply bandpass filters to isolate relevant frequency ranges.
+
+- Use Power Spectral Density (PSD) to extract frequency-domain features.
+Here is the Preprocessing pipeline:
+#### 2.1 **Trial-wise Normalization**
 
 ## Models
 
