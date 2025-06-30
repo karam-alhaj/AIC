@@ -9,7 +9,7 @@
   - [SSVEP](#-ssvep)
 - [Data Preprocessing](#-data-preprocessing)
 - [ Models](#-models)
-- [ Results](#-results)
+- [ Final predictions & Submissions](#-final-predictions-&-submissions)
 - [ Contributors](#-contributors)
 
 ## Competition Overview
