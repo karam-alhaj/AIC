@@ -177,7 +177,111 @@ These CSV files are located at the root of the dataset and are used to structure
   - Columns: `id`, `label`.
   - `label` should be replaced with predictions for each `id` in `test.csv`.
 
----
 
+## EEG-Based BCI Tasks
+Brain-Computer Interfaces (BCIs) enable direct communication between the human brain and external devices by interpreting brain signals in real time. Among the most widely used paradigms in non-invasive BCIs are **Motor Imagery (MI)** and **Steady-State Visual Evoked Potentials (SSVEP)**.
 
+These tasks are based on distinct cognitive processes:
 
+### 1. Motor Imagery (MI)
+It is a mental process in which a person **imagines performing a specific motor action**, such as moving the left or right hand, without any actual physical movement. Although no muscles are activated, this mental simulation generates distinct patterns of neural activity in the sensorimotor cortex (the same region involved in planning and executing real movements).
+<div align="center">
+  <img src="images/MI.png" alt="Motor Imagery" width="750"/>
+</div>
+
+#### Accessing MI Data
+
+To work with the Motor Imagery (MI) trials, we first filtered only the MI-related entries from the `train.csv` and `validation.csv` files using the task column:
+
+```
+# Load index files
+base_path = '/content/mtc-aic3_dataset'
+train_df = pd.read_csv(f'{base_path}/train.csv')
+validation_df = pd.read_csv(f'{base_path}/validation.csv')
+
+# Filter for only MI task
+train_mi = train_df[train_df['task'] == 'MI'].reset_index(drop=True)
+validation_mi = validation_df[validation_df['task'] == 'MI'].reset_index(drop=True)
+```
+Then, we accessed the raw EEG data for each trial from its corresponding `EEGdata.csv` file.
+```
+# Function to load one trial's EEG data
+def load_mi_trial_data(row, base_path):
+    dataset = 'train' if row['id'] <= 4800 else 'validation'
+    subject_id = row['subject_id']
+    trial_session = row['trial_session']
+    trial_num = int(row['trial'])
+
+    eeg_file_path = os.path.join(base_path, 'MI', dataset, subject_id, str(trial_session), 'EEGdata.csv')
+    eeg_data = pd.read_csv(eeg_file_path)
+
+    samples_per_trial = 2250
+    start_idx = (trial_num - 1) * samples_per_trial
+    end_idx = start_idx + samples_per_trial
+
+    trial_data = eeg_data.iloc[start_idx:end_idx]
+    return trial_data
+```
+#### EEG Channel Visualizations (MI)
+
+To better understand the raw EEG signals, we plotted the time series data from all 8 EEG channels for a single MI trial:
+
+```python
+channels = ['C3', 'FZ', 'CZ', 'C4', 'PZ', 'PO7', 'OZ', 'PO8']
+
+for ch in channels:
+    plt.figure(figsize=(12, 4))
+    plt.plot(trial_data[ch])
+    plt.title(f"EEG Signal from Channel {ch} - Subject {first_row['subject_id']} Trial {first_row['trial']} ({first_row['label']})")
+    plt.xlabel("Time (samples)")
+    plt.ylabel("Amplitude (μV or raw units)")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'images/channel_{ch}.png')  
+    plt.close()
+```
+These visualizations help inspect the amplitude and temporal patterns across different regions of the brain during the motor imagery task.
+
+After understanding the structure of the MI data, we extracted the **EEG signals for all trials** using the following function. It processes the full dataset and stores only the EEG channels needed for classification.
+```
+eeg_channels = ['FZ', 'C3', 'CZ', 'C4', 'PZ', 'PO7', 'OZ', 'PO8']
+
+def extract_trials(df, base_path, is_test=False):
+    data = []
+    labels = []
+
+    for _, row in tqdm(df.iterrows(), total=len(df)):
+        # Determine dataset folder
+        dataset = 'test' if row['id'] >= 4901 else ('validation' if row['id'] >= 4801 else 'train')
+
+        subject_id = row['subject_id']
+        trial_session = row['trial_session']
+        trial_num = int(row['trial'])
+
+        file_path = os.path.join(base_path, 'MI', dataset, subject_id, str(trial_session), 'EEGdata.csv')
+        eeg = pd.read_csv(file_path)
+
+        # Extract 9-second window (2250 samples) for this trial
+        start = (trial_num - 1) * 2250
+        end = start + 2250
+        eeg_segment = eeg.iloc[start:end][eeg_channels].values  # shape: (2250, 8)
+
+        data.append(eeg_segment)
+
+        if not is_test:
+            labels.append(0 if row['label'] == 'Left' else 1)
+
+    return np.array(data), (None if is_test else np.array(labels))
+```
+We used the `extract_trials()` function to convert the raw EEG MI data into NumPy arrays for modeling.  
+Each trial is represented as a matrix of shape `(2250, 8)`: corresponding to 9 seconds of EEG signals across 8 channels.
+
+Here are the resulting dataset shapes:
+```
+100%|██████████| 2400/2400 [04:36<00:00, 8.67it/s]
+100%|██████████| 50/50 [00:04<00:00, 11.79it/s]
+100%|██████████| 50/50 [00:05<00:00, 8.82it/s]
+Train shape: (2400, 2250, 8), Labels: (2400,)
+Val shape: (50, 2250, 8), Labels: (50,)
+Test shape: (50, 2250, 8)
+```
