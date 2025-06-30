@@ -5,11 +5,11 @@
 - [What is EEG?](#what-is-eeg)
 - [Data Description](#data-description)
 - [EEG-Based BCI Tasks](#eeg-based-bci-tasks)
-  - [Motor Imagery (MI)](#motor-imagery-mi)
-  - [SSVEP](#ssvep)
+  - [Motor Imagery (MI)](#1.-motor-imagery-mi)
+  - [SSVEP](#2.-ssvep)
 - [Data Preprocessing](#data-preprocessing)
 - [Models](#models)
-- [Final predictions & Submissions](#final-predictions-&-submissions)
+- [Final Predictions & Submissions](#final-predictions-&-submissions)
 - [Contributors](#contributors)
 
 ## Competition Overview
