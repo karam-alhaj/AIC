@@ -307,6 +307,16 @@ train_ssvep_df = train_df[train_df['task'] == "SSVEP"].reset_index(drop=True)
     print(f"Loaded {len(train_ssvep_df)} training, {len(val_ssvep_df)} validation, and {len(test_ssvep_df)} test trials for SSVEP task.")
 ```
 Then loading the EEG data as before.
+Here are the resulting dataset shapes:
+
+```
+Processing Train: 100%   2400/2400 [03:51<00:00, 11.88it/s]
+Finished processing Train. Extracted features for 2400 trials.
+Processing Validation: 100%   50/50 [00:05<00:00,  9.10it/s]
+Finished processing Validation. Extracted features for 50 trials.
+Processing Test: 100%   50/50 [00:04<00:00, 12.71it/s]
+Finished processing Test. Extracted features for 50 trials.
+```
 
 #### Initial Data Exploration & Visualizations
 
