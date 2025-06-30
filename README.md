@@ -305,7 +305,29 @@ Here is the Preprocessing pipeline:
 EEG signals vary significantly in magnitude across trials. This normalization ensures **each trial has zero mean and unit variance**, making signals more comparable so before any filtering, **each trial is normalized independently** to center the signal and reduce amplitude variation.
 #### 1.2 **Bandpass Filtering (8–30 Hz)**
 
+It is a signal processing technique that **allows only a specific range of frequencies to pass through** while removing all others ((frequencies below and above the chosen range).
 
+For MI tasks, the most relevant frequencies are:
+
+- **Mu rhythms (8–13 Hz)**
+
+- **Beta rhythms (13–30 Hz)**
+  
+So, we filter our EEG data to only keep signals between **8 Hz and 30 Hz**, removing irrelevant lower (eye blinks, movement) and higher frequencies (noise or muscle artifacts) as follows:
+
+```
+def bandpass_filter(data, low=8, high=30, fs=250, order=4):
+    nyquist = 0.5 * fs
+    low /= nyquist
+    high /= nyquist
+    b, a = butter(order, [low, high], btype='band')
+    return filtfilt(b, a, data, axis=0)
+
+X_train = np.array([bandpass_filter(trial) for trial in X_train])
+X_val = np.array([bandpass_filter(trial) for trial in X_val])
+X_test = np.array([bandpass_filter(trial) for trial in X_test])
+```
+#### 1.3 **Subject-wise Normalization**
 
 
 
