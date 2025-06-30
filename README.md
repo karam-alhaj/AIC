@@ -347,6 +347,51 @@ So, we apply subject-wise normalization which normalize EEG data individually fo
 
 - Helping the model focus on patterns related to the MI task not the person.
 
+Here is the function:
+```
+def subjectwise_normalize(X, df):
+    subject_map = group_trials_by_subject(X, df)
+    X_norm = np.empty_like(X)
+
+    for subject_id, indices in subject_map.items():
+        subject_data = X[indices]  # shape: (n_trials, n_time, n_channels)
+
+        # Flatten over trials and time to get overall stats
+        all_data = subject_data.reshape(-1, X.shape[2])  # (n_trials * time, n_channels)
+
+        mean = all_data.mean(axis=0)
+        std = all_data.std(axis=0)
+
+        # Normalize each trial
+        X_norm[indices] = (subject_data - mean) / std
+
+    return X_norm
+```
+It groups trials by `subject ID` and then for each subject:
+
+- Flatten all their EEG data across time and trials.
+
+- Compute mean and standard deviation per EEG channel.
+
+- Normalize each trial.
+  
+- Return normalized data, with consistent channel distribution per subject.
+
+#### 1.4 Common Spatial Pattern (CSP) Filtering
+
+It is a powerful spatial filtering technique used in EEG signal processing as it helps to enhance the discriminability between two mental states **(imagining left hand vs. right hand movement)** by projecting the EEG data into a new space that maximizes variance for one class while minimizing it for the other.
+
+Since EEG signals are recorded from multiple electrodes (channels) placed across the scalp and not all channels are equally informative for every task so, CSP finds optimal linear combinations of these channels (spatial filters) that **highlight patterns most relevant to distinguishing the two classes**.
+
+```
+X_train_csp_input = X_train.transpose(0, 2, 1)  # (n_trials, n_channels, n_times)
+X_val_csp_input = X_val.transpose(0, 2, 1)
+
+csp = CSP(n_components=4, reg=None, log=True, norm_trace=False)
+X_train_csp = csp.fit_transform(X_train_csp_input, y_train)
+X_val_csp = csp.transform(X_val_csp_input)
+```
+This code extracts 4 CSP features per trial whihc are the spatial filters that best discriminate between your two MI classes (left vs. right hand) then applying a log-transform to the filtered signal power. This often improves classification by **reducing skewed feature distributions**.
 
 
 
