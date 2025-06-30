@@ -48,8 +48,9 @@ The dataset provided contains **multi-channel EEG recordings** collected during 
 EEG data is typically presented as a series of waveforms, where each waveform corresponds to the electrical activity from a specific electrode location on the scalp. These waveforms vary over time and are analyzed to detect patterns and features in the brain’s electrical activity.
 
 <div align="center">
-  <img src="images/eeg-brain-waves-time-series-1.jpg" alt="EEG Waveform" width="800"/>
+  <img src="images/EEG-signal-of-a-normal-control.ppm" alt="EEG Signal" width="600">
 </div>
+
 
 A key part of EEG analysis involves breaking down these waveforms into **frequency bands**, including:
 
