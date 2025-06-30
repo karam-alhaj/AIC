@@ -743,7 +743,7 @@ Final_submission.csv
 - [Alaa Atef](https://www.linkedin.com/in/alaa-atef-587421285/)
 - [Mohamed tarek](https://www.linkedin.com/in/mohamed-tarek-a67275249/)
 - [Habiba Mohamed](https://www.linkedin.com/in/habiba-m-attia-8b4651244/)
-- [Karam](https://www.linkedin.com/in/karam-elhaj/)
+- [Karam Elhaj](https://www.linkedin.com/in/karam-elhaj/)
 - [Osama Abido](https://www.linkedin.com/in/osama-abido-30010623a/)
 
 
