@@ -552,6 +552,27 @@ y_train_encoded = label_encoder.fit_transform(y_train)
 y_val_encoded = label_encoder.transform(y_val)
 ```
 
+#### 2.4 Feature Selection
+
+After feature extraction and scaling, we may end up with a high-dimensional feature space. Not all features contribute equally to model performance. To reduce overfitting and enhance generalization, we apply feature selection to retain only the most informative features.
+
+We use a **Random Forest classifier** to estimate feature importance. Then, **SelectFromModel** selects features whose importance is above a threshold—here `the median importance score`.
+
+```
+sel_clf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
+sel_clf.fit(X_train_scaled, y_train_encoded)
+
+#Select features with importance above the median
+selector = SelectFromModel(sel_clf, prefit=True, threshold='median')
+
+X_train_selected = selector.transform(X_train_scaled)
+X_val_selected = selector.transform(X_val_scaled)
+X_test_selected = selector.transform(X_test_scaled)
+```
+- **Initial Features**: `96`
+
+- **Selected Features**: `48`
+
 ## Models
 
 ### 1. MI Classification  Model
