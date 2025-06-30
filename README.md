@@ -43,7 +43,11 @@ The dataset provided contains **multi-channel EEG recordings** collected during 
 
 EEG data is typically presented as a series of waveforms, where each waveform corresponds to the electrical activity from a specific electrode location on the scalp. These waveforms vary over time and are analyzed to detect patterns and features in the brain’s electrical activity.
 
+<div align="center">
+  <img src="images/eeg-brain-waves-time-series-1.jpg" alt="EEG Waveform" width="800"/>
+</div>
 A key part of EEG analysis involves breaking down these waveforms into **frequency bands**, including:
+
 
 - **Delta (0.5–4 Hz)**: Deep sleep
 - **Theta (4–8 Hz)**: Light sleep, meditation
@@ -53,5 +57,4 @@ A key part of EEG analysis involves breaking down these waveforms into **frequen
 
 These frequency bands are associated with various mental and physiological states, and extracting features from them plays a vital role in EEG-based classification tasks like MI and SSVEP.
 
-![EEG Sample Waveforms](images/eeg_waveframes)
 
