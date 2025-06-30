@@ -701,16 +701,17 @@ The model was evaluated on both the training and validation sets:
 
 #### 2.3 Model Summary
 
-```
-Class	Precision	Recall	F1-score	Support
-Backward	0.67	0.71	0.69	14
-Forward	0.64	0.75	0.69	12
-Left	0.80	0.57	0.67	14
-Right	0.64	0.70	0.67	10
-Accuracy	–	–	0.68	50
-Macro Avg	0.69	0.68	0.68	50
-Weighted Avg	0.69	0.68	0.68	50
-```
+
+| Class / Metric   | Precision | Recall | F1-Score |
+|------------------|-----------|--------|----------|
+| **Backward**     | 0.67      | 0.71   | 0.69     |
+| **Forward**      | 0.64      | 0.75   | 0.69     |
+| **Left**         | 0.80      | 0.57   | 0.67     |
+| **Right**        | 0.64      | 0.70   | 0.67     |
+| **Macro Avg**    | 0.69      | 0.68   | 0.68     |
+| **Weighted Avg** | 0.69      | 0.68   | 0.68     |
+| **Accuracy**     | –         | –      | **0.6800** |
+
 
 
 
