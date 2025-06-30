@@ -25,6 +25,9 @@ The dataset provided contains **multi-channel EEG recordings** collected during 
 ## What is EEG?
 
 **Electroencephalography (EEG)** is a non-invasive technique used to record the electrical activity of the brain. It works by placing electrodes on the scalp, which detect voltage fluctuations resulting from the synchronous activity of large groups of neurons, especially in the cerebral cortex.
+<div align="center">
+  <img src="images/EEG-readings.png" alt="EEG Brain Electrode Setup" width="600"/>
+</div>
 
 ### Key Features:
 
