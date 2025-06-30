@@ -477,7 +477,52 @@ To detect this frequency-specific response, we must:
 
 - Use Power Spectral Density (PSD) to extract frequency-domain features.
 Here is the Preprocessing pipeline:
-#### 2.1 **Trial-wise Normalization**
+#### 2.1 **Bandpass Filtering (Butterworth Filter)**
+
+To enhance relevant frequency information and suppress unwanted noise, we apply a 4th-order Butterworth band-pass filter. This filter is designed to retain only frequencies between 4 Hz and 42 Hz, where the brain's response to visual stimuli (SSVEP) is typically found.
+```
+def apply_butterworth_filter(data, fs=250):
+    lowcut, highcut, order = 4.0, 42.0, 4
+    # Nyquist frequency is half the sampling rate.
+    nyq = 0.5 * fs
+    # Normalize the cutoff frequencies.
+    low, high = lowcut / nyq, highcut / nyq
+    # Get the filter coefficients (numerator 'b' and denominator 'a').
+    b, a = butter(order, [low, high], btype='band')
+    # Apply the filter along the columns (axis=0).
+    # A check is included to handle constant-value signals, which would cause filtfilt to fail.
+    filtered_data = np.apply_along_axis(lambda x: filtfilt(b, a, x) if not np.all(x == x[0]) else x, 0, data)
+    return filtered_data
+```
+
+#### 2.2 Power Spectral Density Feature Extraction for SSVEP
+
+To effectively classify SSVEP signals, we need to extract features that represent how much power is concentrated around specific frequencies corresponding to visual stimulus. These features are derived from the EEG signal's Power Spectral Density (PSD) using Welch’s method.
+
+```
+def extract_psd_features(data, fs=250):
+    all_features = []
+    # Define the length of each segment for Welch's method (4 seconds of data).
+    nperseg = fs * 4
+    # Iterate through each EEG channel (columns of the data).
+    for i in range(data.shape[1]):
+        channel_data = data[:, i]
+        freqs, psd = welch(channel_data, fs=fs, nperseg=nperseg, nfft=nperseg*2)
+        # Iterate through each target frequency (7 Hz, 8 Hz, ...).
+        for f in TARGET_FREQS:
+            for h in range(1, 4):
+                harmonic_freq = h * f
+                target_idx = np.argmin(np.abs(freqs - harmonic_freq))
+                # Define the noise band as frequencies within +/- 3 Hz of the harmonic
+                noise_indices = np.where((freqs >= harmonic_freq - 3) & (freqs <= harmonic_freq + 3) & (np.abs(freqs - harmonic_freq) > 0.25))[0]
+                signal_power = psd[target_idx]
+                noise_power = np.mean(psd[noise_indices]) if len(noise_indices) > 0 else 1e-12 # Add a small value to avoid division by zero.
+                snr = signal_power / noise_power
+                all_features.append(signal_power)
+                all_features.append(snr)
+    return np.array(all_features)
+```
+For each trial, we computed the signal power and SNR for the 4 target frequencies (7, 8, 10, 13 Hz) and their first three harmonics across each of the 4 occipital-parietal channels (PO7, PZ, OZ, PO8). This provided us with a rich feature set that captures frequency-domain information essential for SSVEP classification.
 
 ## Models
 
