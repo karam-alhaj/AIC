@@ -1,7 +1,7 @@
 # MTC-AIC3 EEG Classification Models by MetaCode Team
 ## Table of Contents
 
-- [Competition Overview](#-competition-overview)
+- [Competition Overview](##-competition-overview)
 - [ What is EEG?](#-what-is-eeg)
 - [ Data Description](#-data-description)
 - [EEG-Based BCI Tasks](#-eeg-based-bci-tasks)
