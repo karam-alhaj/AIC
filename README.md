@@ -316,7 +316,7 @@ Here are the plots:
 <div align="center">
   <img src="images/SSVEP_label_distribution.png" alt="SSVEP" width="5000" height="700"/>
 </div>
-There is a difference in labels distribution in validation data specially in `Right` and 'Forward' labels.
+There is a difference in labels distribution in validation data specially in `Right` and  `Forward` labels.
 
 
 ## Data Preprocessing
