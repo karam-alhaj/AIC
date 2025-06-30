@@ -46,6 +46,7 @@ EEG data is typically presented as a series of waveforms, where each waveform co
 <div align="center">
   <img src="images/eeg-brain-waves-time-series-1.jpg" alt="EEG Waveform" width="800"/>
 </div>
+
 A key part of EEG analysis involves breaking down these waveforms into **frequency bands**, including:
 
 
