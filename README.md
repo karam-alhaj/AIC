@@ -624,8 +624,8 @@ y_val_pred = cat_clf.predict(X_val_csp_psd)
 
 The model was evaluated on both the training and validation sets:
 
-- **Training Accuracy:** `0.6733`  
-- **Validation Accuracy:** `0.6400`
+- **Training Accuracy:** `67.33%`  
+- **Validation Accuracy:** `64.00%`
 
 #### 1.3 Model Summary
 
@@ -643,9 +643,9 @@ After training the Random Forest classifier and several other baseline models, w
 
 To address this, we employed aggressive regularization using **RandomizedSearchCV**.
 
-#### 1.1 Model Setup and Training:
+#### 2.1 Model Setup and Training:
 
-W choose the best model which is **Random Forest Classifier**
+We choose the best model which is **Random Forest Classifier**
 
 First, we define the parameters:
 ```
@@ -682,13 +682,38 @@ best_rf = random_search.best_estimator_
 ``` 
 The model with the best validation performance **(highest accuracy)** is stored in `best_rf` and used for final predictions.
 
-- **Result**:
+- **Best Parameters**:
   ```
   Performing hyperparameter tuning with AGGRESSIVE regularization...
   Fitting 5 folds for each of 25 candidates, totalling 125 fits
 
   Best parameters found: {'n_estimators': 150, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 6, 'class_weight': 'balanced'}
   ```
+
+#### 2.2 Model Performance
+
+The best Random Forest model, selected via aggressive hyperparameter tuning.
+
+The model was evaluated on both the training and validation sets:
+
+- **Training Accuracy:** `67.50%`  
+- **Validation Accuracy:** `68.00%`
+
+#### 2.3 Model Summary
+
+```
+Class	Precision	Recall	F1-score	Support
+Backward	0.67	0.71	0.69	14
+Forward	0.64	0.75	0.69	12
+Left	0.80	0.57	0.67	14
+Right	0.64	0.70	0.67	10
+Accuracy	–	–	0.68	50
+Macro Avg	0.69	0.68	0.68	50
+Weighted Avg	0.69	0.68	0.68	50
+```
+
+
+
 
 
 
