@@ -149,8 +149,8 @@ Each session directory contains a single `EEGdata.csv` file that holds raw EEG r
 
 - **Columns**:
   - `Time`
-  - 8 EEG Channels: FZ, C3, CZ, C4, PZ, PO7, OZ, PO8
-  - Motion sensors: `AccX`, `AccY`, `AccZ`, `Gyro1`, `Gyro2`, `Gyro3`
+  - 8 EEG Channels: `FZ`, `C3`, `CZ`, `C4`, `PZ`, `PO7`, `OZ`, `PO8`.
+  - Motion sensors: `AccX`, `AccY`, `AccZ`, `Gyro1`, `Gyro2`, `Gyro3`.
   - `Battery`, `Counter`, and `Validation` flag
 
 - **Samples per trial**:
