@@ -10,6 +10,7 @@
 - [Data Preprocessing](#data-preprocessing)
 - [Models](#models)
 - [Final Predictions & Submissions](#final-predictions--submissions)
+- [Future Work / Next Steps](#future-work--next-steps)
 - [Contributors](#contributors)
 
 ## Competition Overview
@@ -735,6 +736,24 @@ After decoding the label integers back to their original class names , we saved 
 ```
 Final_submission.csv
 ```
+
+
+## Future Work / Next Steps
+
+If we are accepted into the second phase (round) of the AIC competition, our team plans to build upon the foundations we've established in the first round. Specifically, we aim to explore and integrate the following directions:
+
+- **Deep Learning Architectures**: Incorporate CNNs, RNNs, or hybrid models tailored for EEG signals to better capture spatiotemporal patterns.
+
+- **More Advanced Signal Processing**: Apply techniques like wavelet transforms, Riemannian geometry, or adaptive filtering to extract richer features from EEG data.
+
+- **Fine-Grained Error Analysis**: Investigate misclassifications more deeply to understand performance bottlenecks and improve robustness across subjects and sessions.
+
+- **Transfer Learning**: Leverage pre-trained models or domain adaptation techniques to generalize better across subjects and tasks.
+
+- **Real-time Compatibility**: Begin exploring optimizations for deploying models in real-time or low-latency BCI applications.
+
+We are excited about the opportunity to further improve our system and contribute meaningful innovations in EEG-based BCI research.
+
 
 
 ## Contributors 
