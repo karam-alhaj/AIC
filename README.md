@@ -434,4 +434,59 @@ By concatenating both we:
 - give the model richer information to learn especially when either CSP or PSD alone isn’t enough.
 
 
+## Models
+
+### 1. MI Classification  Model
+
+We used **CatBoostClassifier**, a gradient boosting algorithm that is:
+
+- Fast and accurate on tabular data.
+
+- Less prone to overfitting with small datasets.
+
+#### 1.1 Model Setup and Training:
+```
+cat_clf = CatBoostClassifier(
+    iterations=85,
+    learning_rate=0.05,
+    depth=5,
+    l2_leaf_reg=3.0,
+    loss_function='Logloss',
+    eval_metric='Accuracy',
+    random_seed=42,
+    verbose=False,
+    class_weights=[1.1, 0.9]  # Handling class imbalance
+)
+```
+The reason of why we adjust `class_weights` as we observe that there is a slightly difference in the label distribution of validation data:
+- 25 observations have "Left" label.
+- 20 observations have "Right" label.
+
+Then we trained the model on the fused CSP + PSD features using the training data and applying predictions on validation data:
+```
+cat_clf.fit(X_train_csp_psd, y_train)
+
+# predictions on validation data
+y_train_pred = cat_clf.predict(X_train_csp_psd)
+y_val_pred = cat_clf.predict(X_val_csp_psd)
+```
+
+#### 1.2 Model Performance:
+
+The model was evaluated on both the training and validation sets:
+
+- **Training Accuracy:** `0.6733`  
+- **Validation Accuracy:** `0.6400`
+
+#### 1.3 Model Summary
+
+| Class / Metric   | Precision | Recall | F1-Score |
+|------------------|-----------|--------|----------|
+| **Left**         | 0.68      | 0.68   | 0.68     |
+| **Right**        | 0.59      | 0.59   | 0.59     |
+| **Macro Avg**    | 0.63      | 0.63   | 0.63     |
+| **Weighted Avg** | 0.64      | 0.64   | 0.64     |
+| **Accuracy**     | –         | –      | **0.6400** |
+
+### 2. SSVEP Classification Model
 
