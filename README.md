@@ -7,7 +7,7 @@
 - [EEG-Based BCI Tasks](#-eeg-based-bci-tasks)
   - [Motor Imagery (MI)](#-motor-imagery-mi)
   - [SSVEP](#-ssvep)
-- [Data Preprocessing](#-preprocessing)
+- [Data Preprocessing](#-data-preprocessing)
 - [ Models](#-models)
 - [ Results](#-results)
 - [ Contributors](#-contributors)
@@ -285,3 +285,30 @@ Train shape: (2400, 2250, 8), Labels: (2400,)
 Val shape: (50, 2250, 8), Labels: (50,)
 Test shape: (50, 2250, 8)
 ```
+## Data Preprocessing
+
+Since EEG data is fundamentally different from typical structured datasets, traditional preprocessing techniques (like removing nulls or standard tabular scaling) are not sufficient. Instead, EEG signals require **signal-specific preprocessing** techniques to handle their unique characteristics such as noise, artifacts, and high temporal resolution.
+
+In this project, we designed two separate preprocessing pipelines tailored to each task:
+
+- **Motor Imagery (MI)**: Focused on isolating motor-related patterns from brain activity.
+- **Steady-State Visual Evoked Potentials (SSVEP)**: Focused on extracting frequency components associated with visual stimulus response.
+
+Each task required unique transformations to optimize the signal quality for effective classification.
+### 1. Motor Imagery 
+
+ MI EEG data was preprocessed through several signal-specific steps to enhance relevant patterns and reduce noise and subject variability. 
+ 
+Here is the Preprocessing pipeline:
+#### 1.1 **Trial-wise Normalization**
+
+EEG signals vary significantly in magnitude across trials. This normalization ensures **each trial has zero mean and unit variance**, making signals more comparable so before any filtering, **each trial is normalized independently** to center the signal and reduce amplitude variation.
+#### 1.2 **Bandpass Filtering (8–30 Hz)**
+
+
+
+
+
+
+
+
