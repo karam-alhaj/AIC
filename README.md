@@ -573,11 +573,21 @@ X_test_selected = selector.transform(X_test_scaled)
 
 - **Selected Features**: `48`
 
+This helped improve model performance and **reduce overfitting by eliminating less relevant features**.
+
 ## Models
 
 ### 1. MI Classification  Model
 
-We used **CatBoostClassifier**, a gradient boosting algorithm that is:
+We experimented with several baseline classifiers for both Motor Imagery (MI) and SSVEP tasks to understand which models perform best on EEG data.
+
+These included:
+- Random Forest
+- CatBoost
+- Support Vector Machine 
+- Logistic Regression
+
+In order to achieve the highest accuracy, we choose **CatBoostClassifier**, a gradient boosting algorithm that is:
 
 - Fast and accurate on tabular data.
 
@@ -628,4 +638,51 @@ The model was evaluated on both the training and validation sets:
 | **Accuracy**     | –         | –      | **0.6400** |
 
 ### 2. SSVEP Classification Model
+
+After training the Random Forest classifier and several other baseline models, we observed the need to improve generalization and reduce potential overfitting. 
+
+To address this, we employed aggressive regularization using **RandomizedSearchCV**.
+
+#### 1.1 Model Setup and Training:
+
+W choose the best model which is **Random Forest Classifier**
+
+First, we define the parameters:
+```
+param_dist = {
+    'n_estimators': [50, 100, 150],
+    'max_depth': [4, 5, 6, 7],
+    'min_samples_leaf': [6, 8, 10, 12],
+    'max_features': ['sqrt', 0.5],
+    'class_weight': ['balanced']
+}
+```
+After that we apply **Stratified Cross-Validation Strategy** which ensures each fold contains approximately the same class distribution as the full dataset.
+
+Then run **RandomizedSearchCV**
+```
+random_search = RandomizedSearchCV(
+    estimator=RandomForestClassifier(random_state=42, n_jobs=-1),
+    param_distributions=param_dist,
+    n_iter=25,
+    cv=cv_strategy,
+    scoring='accuracy',
+    verbose=1,
+    random_state=42,
+    n_jobs=-1
+)
+```
+Fitting the search on the data:
+```
+random_search.fit(X_train_selected, y_train_encoded)
+```
+And retrieve the best model
+```
+best_rf = random_search.best_estimator_
+``` 
+The model with the best validation performance **(highest accuracy)** is stored in `best_rf` and used for final predictions.
+
+
+
+
 
