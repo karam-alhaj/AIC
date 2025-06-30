@@ -67,15 +67,26 @@ The dataset used in this competition comes from the **MTC-AIC3 BCI Competition**
 
 Each participant performed tasks under two different Brain-Computer Interface paradigms: **Motor Imagery (MI)** and **Steady-State Visual Evoked Potential (SSVEP)**.
 
-- **EEG Channels**: 8 (FZ, C3, CZ, C4, PZ, PO7, OZ, PO8)
+- **EEG Data**: Recordings from 8 channels.
+- **EEG Channels**: 8 (FZ, C3, CZ, C4, PZ, PO7, OZ, PO8).
 - **Sampling Rate**: 250 Hz
 - **Subjects**: 40 participants
+- **Participants**: 40 male subjects, average age 20 years.
 - **Trials**:
   - MI: 9 seconds per trial → 2250 samples
   - SSVEP: 7 seconds per trial → 1750 samples
 - **Trials per Session**: 10 trials for each experimental session.
 ---
-### General Dataset Structure
+### Directory Structure
+The dataset is organized into two main task directories **(MI/ and SSVEP/)** within the mtc-aic3_dataset folder. 
+Each task directory contains three subdirectories for data splitting:
+
+- **train/**: Data for model training (30 subjects, 8 trial sessions per subject, 4800 total trials).
+- **validation/**: Data for model validation (5 subjects, 1 trial session per subject, 100 total trials).
+- **test/**: Data for model testing (5 subjects, 1 trial session per subject, 100 total trials).
+
+Each subject's directory **(e.g., S1/, S2/)** contains session directories **(e.g., 1/)**, representing experimental sessions.
+
 Both **MI** and **SSVEP** tasks are stored under their respective directories inside the main dataset folder...
 ```
 mtc-aic3_dataset/
@@ -128,6 +139,46 @@ mtc-aic3_dataset/
 ├── test.csv
 └── sample_submission.csv
 ```
+---
+
+### Data File Details
+
+#### EEGdata.csv (Inside Each Session Directory)
+
+Each session directory contains a single `EEGdata.csv` file that holds raw EEG recordings for **all 10 trials**, concatenated sequentially.
+
+- **Columns**:
+  - `Time`
+  - 8 EEG Channels: FZ, C3, CZ, C4, PZ, PO7, OZ, PO8
+  - Motion sensors: `AccX`, `AccY`, `AccZ`, `Gyro1`, `Gyro2`, `Gyro3`
+  - `Battery`, `Counter`, and `Validation` flag
+
+- **Samples per trial**:
+  - MI: `9 seconds × 250 Hz = 2250 samples`
+  - SSVEP: `7 seconds × 250 Hz = 1750 samples`
+
+#### Root-Level CSV Files
+
+These CSV files are located at the root of the dataset and are used to structure splits:
+
+- **`train.csv`**: Labeled training data (4800 entries).
+  - Columns: `id`, `subject_id`, `task` (MI or SSVEP), `trial_session`, `trial`, `label`.
+  - `id` range: **1–4800**
+
+- **`validation.csv`**: Labeled validation data (100 entries).
+  - Same columns as `train.csv`.
+  - `id` range: **4801–4900**
+
+- **`test.csv`**: Unlabeled test data (100 entries).
+  - Columns: `id`, `subject_id`, `task`, `trial_session`, `trial`.
+  - `id` range: **4901–5000**
+
+- **`sample_submission.csv`**: Submission template
+  - Columns: `id`, `label`.
+  - `label` should be replaced with predictions for each `id` in `test.csv`.
+
+---
+
 ### 1. [Motor Imagery (MI)](#-motor-imagery-mi-data)
 
 - **Task**: Participants imagined moving their left or right hand.
@@ -137,7 +188,6 @@ mtc-aic3_dataset/
 - **Trial Duration**: 9 seconds (2250 samples @ 250 Hz)
 - **Total Trials**: 4800 in training (8 sessions × 30 subjects × 10 trials/session)
 
-**Directory Structure**:
 
 
 
