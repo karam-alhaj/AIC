@@ -682,7 +682,13 @@ best_rf = random_search.best_estimator_
 ``` 
 The model with the best validation performance **(highest accuracy)** is stored in `best_rf` and used for final predictions.
 
+- **Result**:
+  ```
+  Performing hyperparameter tuning with AGGRESSIVE regularization...
+  Fitting 5 folds for each of 25 candidates, totalling 125 fits
 
+  Best parameters found: {'n_estimators': 150, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 6, 'class_weight': 'balanced'}
+  ```
 
 
 
