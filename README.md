@@ -20,7 +20,7 @@ The **AIC-3 Competition** focuses on the development of intelligent models for i
 - **Motor Imagery (MI):** This involves decoding neural patterns generated when a person imagines specific motor movements (hand or directional movement).
 
 The dataset provided contains **multi-channel EEG recordings** collected during both SSVEP and MI sessions, annotated respectively with:
-- Visual stimulus frequencies (for SSVEP), and  
+- Visual stimulus frequencies (for SSVEP).
 - Motor imagery categories (for MI).
 
 ## What is EEG?
@@ -735,6 +735,15 @@ After decoding the label integers back to their original class names , we saved 
 Final_submission.csv
 ```
 
+
+## Contributors 
+
+**MetaCode Team**
+- [Alaa Atef](https://www.linkedin.com/in/alaa-atef-587421285/)
+- [Mohamed tarek](https://www.linkedin.com/in/mohamed-tarek-a67275249/)
+- [Habiba Mohamed](https://www.linkedin.com/in/habiba-m-attia-8b4651244/)
+- [Karam](https://www.linkedin.com/in/karam-elhaj/)
+- [Osama Abido](https://www.linkedin.com/in/osama-abido-30010623a/)
 
 
 
