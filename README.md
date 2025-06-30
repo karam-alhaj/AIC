@@ -714,6 +714,26 @@ The model was evaluated on both the training and validation sets:
 
 
 
+## Final Predictions & Submissions
+
+After training and evaluating our models on the validation sets, we used them to generate predictions for the unseen test data for both the Motor Imagery (MI) and SSVEP tasks.
+
+- For Motor Imagery, we passed the test data through the same preprocessing steps:
+
+  - CSP transformation.
+
+  - Power Spectral Density (PSD) feature extraction.
+
+  - Feature fusion using np.hstack().
+
+The final predictions were generated using the trained CatBoost Classifier, and the predicted numerical labels (0 or 1) were mapped back to their original string labels **("Left" or "Right").**
+
+- For SSVEP, we used the final Random Forest classifier (with optimized hyperparameters via RandomizedSearchCV) to predict the class labels on the preprocessed test data.
+
+After decoding the label integers back to their original class names , we saved the predictions and the results were saved into a submission file:
+```
+Final_submission.csv
+```
 
 
 
