@@ -744,7 +744,7 @@ If we are accepted into the second phase (round) of the AIC competition, our tea
 
 - **Deep Learning Architectures**: Incorporate CNNs, RNNs, or hybrid models tailored for EEG signals to better capture spatiotemporal patterns.
 
-- **More Advanced Signal Processing**: Apply techniques like wavelet transforms, Riemannian geometry, or adaptive filtering to extract richer features from EEG data.
+- **More Advanced Signal Processing**: Apply techniques like Riemannian geometry, or adaptive filtering to extract richer features from EEG data.
 
 - **Fine-Grained Error Analysis**: Investigate misclassifications more deeply to understand performance bottlenecks and improve robustness across subjects and sessions.
 
