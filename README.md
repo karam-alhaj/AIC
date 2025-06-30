@@ -534,6 +534,24 @@ def extract_psd_features(data, fs=250):
 ```
 For each trial, we computed the signal power and SNR for the 4 target frequencies (7, 8, 10, 13 Hz) and their first three harmonics across each of the 4 occipital-parietal channels (PO7, PZ, OZ, PO8). This provided us with a rich feature set that captures frequency-domain information essential for SSVEP classification.
 
+Then We plotted both the time-domain and frequency-domain representations of the EEG signal from the OZ channel, a region highly responsive to visual stimuli. The raw and filtered signals demonstrate the effect of bandpass filtering, while PSD reveals clear frequency peaks at stimulation frequencies (7–13 Hz), confirming the presence of SSVEP responses crucial for classification.
+
+#### 2.3 Scaling and Encoding
+
+Before feeding the features into a machine learning model, it is important to normalize the input data and encode categorical labels properly to improve model performance and stability.
+
+```
+scaler = MinMaxScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_val_scaled = scaler.transform(X_val)
+X_test_scaled = scaler.transform(X_test)
+ from sklearn.preprocessing import LabelEncoder
+
+label_encoder = LabelEncoder()
+y_train_encoded = label_encoder.fit_transform(y_train)
+y_val_encoded = label_encoder.transform(y_val)
+```
+
 ## Models
 
 ### 1. MI Classification  Model
