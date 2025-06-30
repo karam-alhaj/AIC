@@ -303,6 +303,16 @@ Here is the Preprocessing pipeline:
 #### 1.1 **Trial-wise Normalization**
 
 EEG signals vary significantly in magnitude across trials. This normalization ensures **each trial has zero mean and unit variance**, making signals more comparable so before any filtering, **each trial is normalized independently** to center the signal and reduce amplitude variation.
+```
+def normalize_trials(X):
+    mean = X.mean(axis=1, keepdims=True)
+    std = X.std(axis=1, keepdims=True)
+    return (X - mean) / std
+
+X_train = normalize_trials(X_train)
+X_val = normalize_trials(X_val)
+X_test = normalize_trials(X_test)
+```
 #### 1.2 **Bandpass Filtering (8–30 Hz)**
 
 It is a signal processing technique that **allows only a specific range of frequencies to pass through** while removing all others ((frequencies below and above the chosen range).
