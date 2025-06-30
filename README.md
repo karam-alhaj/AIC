@@ -393,7 +393,45 @@ X_val_csp = csp.transform(X_val_csp_input)
 ```
 We specifiy `n_components=4` (CSP features per trial) which are the spatial filters that best discriminate between your two MI classes (left vs. right hand) then applying a log-transform to the filtered signal power. This often improves classification by **reducing skewed feature distributions**.
 
+#### 1.5 Power Spectral Density (PSD) Features
 
+PSD describes how the power (energy) of a signal is distributed across different frequency components and how much power exists in brainwave frequencies like alpha, beta, theta, etc.
+
+We extracted PSD features using Welch's method across standard EEG bands: **delta, theta, alpha, beta, gamma** as they reflect how signal power is distributed across frequencies that are crucial for capturing rhythmic brain activity.
+
+```
+from scipy.signal import welch
+
+def compute_psd(trial, fs=250, bands=[(0.5,4), (4,8), (8,13), (13,30), (30,50)]):
+    features = []
+    for ch in range(trial.shape[1]):
+        f, Pxx = welch(trial[:, ch], fs=fs, nperseg=256)
+        for band in bands:
+            fmin, fmax = band
+            band_power = np.trapz(Pxx[(f >= fmin) & (f <= fmax)], f[(f >= fmin) & (f <= fmax)])
+            features.append(band_power)
+    return features
+
+def extract_psd_features(X):
+    return np.array([compute_psd(trial) for trial in X])
+
+X_train_psd = extract_psd_features(X_train)
+X_val_psd = extract_psd_features(X_val)
+```
+
+#### 1.6 Feature Fusion: CSP + PSD
+
+Finally, we concatenated CSP and PSD features into a single feature set for classification.
+
+```
+X_train_csp_psd = np.hstack([X_train_csp, X_train_psd])
+X_val_csp_psd = np.hstack([X_val_csp, X_val_psd])
+```
+By concatenating both we:
+
+- leverage spatial + spectral features.
+
+- give the model richer information to learn especially when either CSP or PSD alone isn’t enough.
 
 
 
