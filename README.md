@@ -285,6 +285,28 @@ Train shape: (2400, 2250, 8), Labels: (2400,)
 Val shape: (50, 2250, 8), Labels: (50,)
 Test shape: (50, 2250, 8)
 ```
+
+### 2. Steady-State Visual Evoked Potential (SSVEP)
+It is a type of brain response that occurs when a person focuses their visual attention on a flickering visual stimulus (a light or pattern flashing at a constant frequency).
+
+The brain produces electrical activity at the same frequency (or harmonics of it), which can be recorded using EEG signals.
+Each stimulus flickers at a unique frequency (e.g., 7 Hz, 10 Hz, etc.), allowing classification based on the dominant frequency in the EEG.
+
+<div align="center">
+  <img src="images/An-SSVEP-BCI-system.png" alt="SSVEP" width="750"/>
+</div>
+
+#### Accessing SSVEP Data
+
+To work with the SSVEP trials, we first filtered only the **SSVEP-related entries** from the `train.csv` and `validation.csv` files using the task column:
+
+```
+train_ssvep_df = train_df[train_df['task'] == "SSVEP"].reset_index(drop=True)
+    val_ssvep_df = validation_df[validation_df['task'] == "SSVEP"].reset_index(drop=True)
+    test_ssvep_df = test_df[test_df['task'] == "SSVEP"].reset_index(drop=True)
+    print(f"Loaded {len(train_ssvep_df)} training, {len(val_ssvep_df)} validation, and {len(test_ssvep_df)} test trials for SSVEP task.")
+```
+
 ## Data Preprocessing
 
 Since EEG data is fundamentally different from typical structured datasets, traditional preprocessing techniques (like removing nulls or standard tabular scaling) are not sufficient. Instead, EEG signals require **signal-specific preprocessing** techniques to handle their unique characteristics such as noise, artifacts, and high temporal resolution.
@@ -433,6 +455,8 @@ By concatenating both we:
 
 - give the model richer information to learn especially when either CSP or PSD alone isn’t enough.
 
+
+### 2. SSVEP 
 
 ## Models
 
