@@ -4,8 +4,9 @@
 - [Competition Overview](#-competition-overview)
 - [ What is EEG?](#-what-is-eeg)
 - [ Data Description](#-data-description)
-  - [ Motor Imagery (MI)](#-motor-imagery-mi-data)
-  - [ SSVEP](#-steady-state-visual-evoked-potentials-ssvep-data)
+- [EEG-Based BCI Tasks](#-eeg-based-bci-tasks)
+  - [Motor Imagery (MI)](#-motor-imagery-mi)
+  - [SSVEP](#-ssvep)
 - [Data Preprocessing](#-preprocessing)
 - [ Models](#-models)
 - [ Results](#-results)
@@ -76,7 +77,7 @@ Each participant performed tasks under two different Brain-Computer Interface pa
   - MI: 9 seconds per trial → 2250 samples
   - SSVEP: 7 seconds per trial → 1750 samples
 - **Trials per Session**: 10 trials for each experimental session.
----
+
 ### Directory Structure
 The dataset is organized into two main task directories **(MI/ and SSVEP/)** within the mtc-aic3_dataset folder. 
 Each task directory contains three subdirectories for data splitting:
@@ -139,7 +140,6 @@ mtc-aic3_dataset/
 ├── test.csv
 └── sample_submission.csv
 ```
----
 
 ### Data File Details
 
@@ -178,16 +178,6 @@ These CSV files are located at the root of the dataset and are used to structure
   - `label` should be replaced with predictions for each `id` in `test.csv`.
 
 ---
-
-### 1. [Motor Imagery (MI)](#-motor-imagery-mi-data)
-
-- **Task**: Participants imagined moving their left or right hand.
-- **Classes**:
-  - `Left`
-  - `Right`
-- **Trial Duration**: 9 seconds (2250 samples @ 250 Hz)
-- **Total Trials**: 4800 in training (8 sessions × 30 subjects × 10 trials/session)
-
 
 
 
