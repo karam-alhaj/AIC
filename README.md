@@ -339,6 +339,14 @@ X_test = np.array([bandpass_filter(trial) for trial in X_test])
 ```
 #### 1.3 **Subject-wise Normalization**
 
+EEG signals vary significantly between individuals due to differences in scalp conductivity, brain anatomy, and even electrode placement. If we normalize all trials globally, the model may overfit to subject-specific signal strengths or biases.
+
+So, we apply subject-wise normalization which normalize EEG data individually for each subject as it reduces this bias by:
+
+- Making each subject's data comparable in scale.
+
+- Helping the model focus on patterns related to the MI task not the person.
+
 
 
 
