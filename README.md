@@ -1,16 +1,16 @@
 # MTC-AIC3 EEG Classification Models by MetaCode Team
 ## Table of Contents
 
-- [Competition Overview](##-competition-overview)
-- [ What is EEG?](#-what-is-eeg)
-- [ Data Description](#-data-description)
-- [EEG-Based BCI Tasks](#-eeg-based-bci-tasks)
-  - [Motor Imagery (MI)](#-motor-imagery-mi)
-  - [SSVEP](#-ssvep)
-- [Data Preprocessing](#-data-preprocessing)
-- [ Models](#-models)
-- [ Final predictions & Submissions](#-final-predictions-&-submissions)
-- [ Contributors](#-contributors)
+- [Competition Overview](#competition-overview)
+- [What is EEG?](#what-is-eeg)
+- [Data Description](#data-description)
+- [EEG-Based BCI Tasks](#eeg-based-bci-tasks)
+  - [Motor Imagery (MI)](#motor-imagery-mi)
+  - [SSVEP](#ssvep)
+- [Data Preprocessing](#data-preprocessing)
+- [Models](#models)
+- [Final predictions & Submissions](#final-predictions-&-submissions)
+- [Contributors](#contributors)
 
 ## Competition Overview
 
