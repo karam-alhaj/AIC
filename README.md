@@ -1,4 +1,7 @@
 # MTC-AIC3 EEG Classification Models by MetaCode Team
+
+Brain Signal Interpretation using AI to interpret multi-channel EEG signals from non-invasive Brain-Computer Interfaces (BCIs) using SSVEP and Motor Imagery (MI) paradigms, aiming to advance neural decoding and human-computer interaction.
+
 ## Table of Contents
 
 - [Competition Overview](#competition-overview)
